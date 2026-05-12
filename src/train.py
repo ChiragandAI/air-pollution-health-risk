@@ -54,7 +54,8 @@ def train_classifier(X: pd.DataFrame, y: pd.Series) -> tuple[Any, dict[str, Any]
 
     models = {
         "RandomForest": RandomForestClassifier(
-            n_estimators=300, random_state=config.RANDOM_SEED, n_jobs=-1
+            n_estimators=200, max_depth=16,
+            random_state=config.RANDOM_SEED, n_jobs=-1,
         ),
         "GradientBoosting": GradientBoostingClassifier(
             n_estimators=200, random_state=config.RANDOM_SEED
@@ -112,7 +113,8 @@ def train_regressor(X: pd.DataFrame, y: pd.Series) -> tuple[Any, dict[str, Any]]
         X, y, test_size=0.2, random_state=config.RANDOM_SEED
     )
     model = RandomForestRegressor(
-        n_estimators=300, random_state=config.RANDOM_SEED, n_jobs=-1
+        n_estimators=120, max_depth=14,
+        random_state=config.RANDOM_SEED, n_jobs=-1,
     )
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
@@ -210,6 +212,6 @@ def plot_confusion(cm, labels, out_path) -> None:
 
 def save_models(clf, reg, kmeans) -> None:
     config.MODELS_DIR.mkdir(parents=True, exist_ok=True)
-    joblib.dump(clf, config.MODELS_DIR / "classifier.joblib")
-    joblib.dump(reg, config.MODELS_DIR / "regressor.joblib")
-    joblib.dump(kmeans, config.MODELS_DIR / "kmeans.joblib")
+    joblib.dump(clf, config.MODELS_DIR / "classifier.joblib", compress=3)
+    joblib.dump(reg, config.MODELS_DIR / "regressor.joblib", compress=3)
+    joblib.dump(kmeans, config.MODELS_DIR / "kmeans.joblib", compress=3)
