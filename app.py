@@ -27,7 +27,9 @@ def load_df() -> pd.DataFrame:
 def load_models() -> dict:
     md = config.MODELS_DIR
     if not (md / "classifier.joblib").exists():
-        return {}
+        with st.spinner("First-time setup — generating data and training models (~30s)…"):
+            import pipeline
+            pipeline.main()
     return {
         "clf": joblib.load(md / "classifier.joblib"),
         "reg": joblib.load(md / "regressor.joblib"),
@@ -35,16 +37,12 @@ def load_models() -> dict:
     }
 
 
-df = load_df()
-models = load_models()
-
 st.title("Air Pollution Health Risk — Decision Support Dashboard")
 st.caption("Multi-city integrated environmental + weather + location modelling. "
            "Synthetic dataset — see README for scope.")
 
-if not models:
-    st.warning("Trained models not found. Run `python3 pipeline.py` first.")
-    st.stop()
+df = load_df()
+models = load_models()
 
 # ── Sidebar controls ──
 cities = sorted(df["city"].unique())
