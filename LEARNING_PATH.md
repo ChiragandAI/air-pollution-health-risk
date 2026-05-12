@@ -178,7 +178,7 @@ Lat/lon are features, the dashboard plots them on a map, but there's no IDW inte
 Real health-risk labels come from clinical outcomes (admissions, mortality, biomarkers). Mine is a composite proxy. Acknowledge it.
 
 ### 5. No hyperparameter tuning.
-RF with `n_estimators=300` is a default. No GridSearchCV / Optuna. *"I deliberately kept this as a baseline to demonstrate the pipeline shape. Hyperparameter tuning is the next obvious improvement."*
+RF with `n_estimators=200, max_depth=16` (classifier) and `n_estimators=120, max_depth=14` (regressor) are deliberate baselines, not tuned. No GridSearchCV / Optuna. *"I deliberately kept this as a baseline to demonstrate the pipeline shape. Hyperparameter tuning is the next obvious improvement."*
 
 ### 6. 87% accuracy: how good is "good"?
 Always have the baseline ready. Majority-class baseline = 60%. Random = 33%. So we're 27 points above majority.
