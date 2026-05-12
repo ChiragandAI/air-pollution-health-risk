@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+.ipynb_checkpoints/
+
+# Pipeline artifacts (re-creatable)
+outputs/
+data/raw/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
