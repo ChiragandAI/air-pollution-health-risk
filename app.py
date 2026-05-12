@@ -107,6 +107,13 @@ if submitted:
     appended = pd.concat([city_df, today], ignore_index=True)
     X, _, _, _ = features.build_feature_table(appended)
     x_row = X.iloc[[-1]]
+    # The classifier was trained on the full multi-city table, so it expects all
+    # city_* one-hot columns. city_df is single-city, so we add the missing ones.
+    expected = list(models["clf"].feature_names_in_)
+    for col in expected:
+        if col not in x_row.columns:
+            x_row[col] = 0
+    x_row = x_row[expected]
     pred_code = int(models["clf"].predict(x_row)[0])
     pred_label = config.RISK_LABELS[pred_code]
     aqi_pred = float(models["reg"].predict(x_row)[0])
