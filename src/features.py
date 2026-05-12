@@ -10,6 +10,8 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
+from . import config
+
 
 ROLL_WINDOWS = [3, 7]   # short-term and weekly exposure windows
 LAG_DAYS = [1, 2]
@@ -58,7 +60,14 @@ def build_feature_table(df: pd.DataFrame):
         "pm25_roll3", "pm25_roll7", "pm25_lag1", "pm25_lag2",
     ]
     X = pd.concat([df[feature_cols], city_oh], axis=1)
-    y_class = df["risk_label"].astype("category")
+    # Explicit ordered category so .cat.codes are deterministic and match
+    # config.RISK_LABELS: Low=0, Moderate=1, High=2. Without this, pandas sorts
+    # categories alphabetically (High=0, Low=1, Moderate=2) and the downstream
+    # app/report would associate the wrong names with each class.
+    y_class = pd.Categorical(
+        df["risk_label"], categories=config.RISK_LABELS, ordered=True,
+    )
+    y_class = pd.Series(y_class, index=df.index, name="risk_label")
     y_reg = df["aqi"]
     meta = df[["date", "city", "lat", "lon"]].copy()
     return X, y_class, y_reg, meta

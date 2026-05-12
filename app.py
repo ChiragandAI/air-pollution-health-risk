@@ -96,15 +96,21 @@ with st.form("predict"):
     submitted = st.form_submit_button("Predict")
 
 if submitted:
-    # Build a single-row feature vector by inheriting yesterday's city profile.
-    today = city_df.iloc[-1:].copy()
-    today["pm25"] = pm25
-    today["pm10"] = pm10
-    today["no2"] = no2
-    today["temp_c"] = temp
-    today["humidity"] = humidity
-    today["wind_speed"] = wind
-    appended = pd.concat([city_df, today], ignore_index=True)
+    # Treat the user's inputs as a sustained scenario: overwrite the last
+    # `HISTORY_DAYS` of city history so the rolling-mean and lag features
+    # (which dominate the model) actually reflect the hypothetical day.
+    # Without this, the model sees today's pm25 = user input but the rolling
+    # 7-day mean still reflects the city's real recent values → predictions
+    # don't move when the user changes inputs.
+    HISTORY_DAYS = 7
+    recent = city_df.iloc[-HISTORY_DAYS:].copy()
+    recent["pm25"] = pm25
+    recent["pm10"] = pm10
+    recent["no2"] = no2
+    recent["temp_c"] = temp
+    recent["humidity"] = humidity
+    recent["wind_speed"] = wind
+    appended = pd.concat([city_df.iloc[:-HISTORY_DAYS], recent], ignore_index=True)
     X, _, _, _ = features.build_feature_table(appended)
     x_row = X.iloc[[-1]]
     # The classifier was trained on the full multi-city table, so it expects all
