@@ -6,8 +6,7 @@ venv/
 .env
 .ipynb_checkpoints/
 
-# Pipeline artifacts (re-creatable)
-outputs/
+# Pipeline artifacts — committed so Streamlit Cloud boots without retraining
 data/raw/
 
 # OS / editor

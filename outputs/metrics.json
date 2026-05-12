@@ -1,0 +1,121 @@
+{
+  "classification": {
+    "cv_scores": {
+      "RandomForest": {
+        "accuracy_mean": 0.871689497716895,
+        "accuracy_std": 0.009290862990582559,
+        "f1_macro_mean": 0.8446065746803338,
+        "f1_macro_std": 0.014568715962074272
+      },
+      "GradientBoosting": {
+        "accuracy_mean": 0.8689497716894976,
+        "accuracy_std": 0.010271435506120547,
+        "f1_macro_mean": 0.8439222505543512,
+        "f1_macro_std": 0.0197525148162043
+      }
+    },
+    "best_model": "RandomForest",
+    "holdout_f1_macro": 0.8532590128760775,
+    "holdout_report": {
+      "Low": {
+        "precision": 0.9183673469387755,
+        "recall": 0.8653846153846154,
+        "f1-score": 0.8910891089108911,
+        "support": 52.0
+      },
+      "Moderate": {
+        "precision": 0.8861209964412812,
+        "recall": 0.9467680608365019,
+        "f1-score": 0.9154411764705882,
+        "support": 263.0
+      },
+      "High": {
+        "precision": 0.8055555555555556,
+        "recall": 0.7073170731707317,
+        "f1-score": 0.7532467532467533,
+        "support": 123.0
+      },
+      "accuracy": 0.8698630136986302,
+      "macro avg": {
+        "precision": 0.8700146329785374,
+        "recall": 0.839823249797283,
+        "f1-score": 0.8532590128760775,
+        "support": 438.0
+      },
+      "weighted avg": {
+        "precision": 0.8673247886717047,
+        "recall": 0.8698630136986302,
+        "f1-score": 0.867002314439456,
+        "support": 438.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        45,
+        0,
+        7
+      ],
+      [
+        0,
+        249,
+        14
+      ],
+      [
+        4,
+        32,
+        87
+      ]
+    ],
+    "labels": [
+      "Low",
+      "Moderate",
+      "High"
+    ]
+  },
+  "regression": {
+    "rmse": 10.091105298604198,
+    "mae": 7.9850850687243335,
+    "r2": 0.9778957183966509
+  },
+  "clustering": {
+    "k": 3,
+    "cities_by_zone": [
+      {
+        "city": "Bangalore",
+        "zone_name": "Low-risk zone",
+        "pm25_mean": 20.156739726027396,
+        "aqi_mean": 40.24219178082192
+      },
+      {
+        "city": "Chennai",
+        "zone_name": "Low-risk zone",
+        "pm25_mean": 24.211972602739728,
+        "aqi_mean": 47.50821917808219
+      },
+      {
+        "city": "Hyderabad",
+        "zone_name": "Low-risk zone",
+        "pm25_mean": 28.429506849315068,
+        "aqi_mean": 55.1186301369863
+      },
+      {
+        "city": "Mumbai",
+        "zone_name": "Low-risk zone",
+        "pm25_mean": 38.582,
+        "aqi_mean": 74.07150684931507
+      },
+      {
+        "city": "Kolkata",
+        "zone_name": "Moderate-risk zone",
+        "pm25_mean": 61.09654794520549,
+        "aqi_mean": 117.73808219178082
+      },
+      {
+        "city": "Delhi",
+        "zone_name": "High-risk zone",
+        "pm25_mean": 91.57583561643835,
+        "aqi_mean": 176.64904109589042
+      }
+    ]
+  }
+}
